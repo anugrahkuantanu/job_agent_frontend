@@ -15,7 +15,7 @@ export default async function Home() {
     <main>
       <div>
         <h1 className='text-white'>Lets your agent do magic</h1>
-        <JobComponent/>
+        {/* <JobComponent/> */}
       </div>
     </main>
   )

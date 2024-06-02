@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { getCurrentUser } from '@/lib/actions/index';
-import { string } from 'zod';
-
+import exp from 'constants';
 
 const API_BASE_URL = 'http://localhost:8000';
 
@@ -33,6 +32,8 @@ export async function getData(endpoint:string) {
     throw new Error('User not authenticated');
   }
 
+
+
   const response = await axios.get(`${API_BASE_URL}/${endpoint}/`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -43,18 +44,51 @@ export async function getData(endpoint:string) {
 }
 
 
-export async function kickOff() {
-  const { token } = await getCurrentUser();
 
-  if(!token){
-    throw new Error('User not authenticated')
-  }
+export async function putData(data:any, endpoint:string) {
+    const { token } = await getCurrentUser()
 
-  const response = await axios.post('http://localhost:8000/agent/run_agent',{
-    headers:{
-      Authorization: `Bearer ${token}`,
+    if (!token){
+        throw new Error('User not authenticated');
     }
-  });
+
+    const response = await axios.put(`${API_BASE_URL}/${endpoint}/`, data, {
+        headers:{
+            Authorization: `Bearer ${token}`,
+        }
+
+    });
+    return response.data
+}
+
+export async function deleteData(endpoint:string) {
+    const { token } = await getCurrentUser()
+
+    if (!token){
+        throw new Error('User not authenticated');
+    }
+
+    const response = await axios.delete(`${API_BASE_URL}/${endpoint}/`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    });
+
+    return response.data;
+}
+
+export async function kickOff() {
+    const { token } = await getCurrentUser();
+
+    if(!token){
+        throw new Error('User not authenticated')
+    }
+
+    const response = await axios.post('http://localhost:8000/agent/run_agent',{
+        headers:{
+        Authorization: `Bearer ${token}`,
+        }
+    });
   
   return response.data
 }

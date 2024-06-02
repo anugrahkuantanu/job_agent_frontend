@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Job } from '@/models/job';
-import { getData } from '@/services/jobServices';
+import { getData } from '@/app/(root)/api/apiMethod';
 
 const JobList = () => {
   // const [jobs, setJobs] = useState<Job[] | null>(null);
@@ -14,6 +14,7 @@ const JobList = () => {
     const fetchJobs = async () => {
       try {
         const userJobs = await getData('jobs');
+
         setJobs(userJobs.jobs);
       } catch (error) {
         console.error('Failed to fetch jobs:', error);
@@ -25,11 +26,19 @@ const JobList = () => {
     fetchJobs();
   }, []);
 
+  const filteredJobs = jobs.filter(job => 
+    job.url !== 'empty' && 
+    job.url !== 'Not provided' &&
+    job.title !== 'Not provided' &&
+    job.company !== 'Not provided' &&
+    job.description !== 'Not provided' &&
+    job.skills !== 'Not provided'
+  );
 
-  const reversedJobs = [...jobs].reverse();
+  const reversedJobs = [...filteredJobs].reverse();
 
   return (
-    <div className="p-4">
+    <div className="py-4">
       {loading ? (
         <p>Loading...</p>
       ) : jobs.length > 0 ? (

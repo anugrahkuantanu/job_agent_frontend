@@ -1,3 +1,7 @@
+import CreateTemplate from "../components/CreateTemplate";
+
 export default function Template(){
-    return <div>Jobs</div>
+    return <div>
+        <CreateTemplate/>
+    </div>
 }

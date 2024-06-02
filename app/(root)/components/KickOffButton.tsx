@@ -1,8 +1,9 @@
 'use client'
 
 import { useState, ChangeEvent } from 'react';
-import { getData, kickOff } from '@/services/jobServices';
-import { postData } from '@/services/jobServices'
+import { getData, kickOff, postData } from '@/app/(root)/api/apiMethod';
+import fetchJobs from '@/app/(root)/components/JobList'
+
 
 interface PdfData {
   content: string;
@@ -13,28 +14,18 @@ const KickOff: React.FC = () => {
   const [pdfData, setPdfData] = useState<PdfData | null>(null);
 
 
-
-  // const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files?.[0];
-  //   if (file && file.type === 'application/pdf') {
-  //     const arrayBuffer = await file.arrayBuffer();
-  //     const data = await pdfParse(arrayBuffer);
-  //     await postData("users", data.text)
-  //     setPdfData({ content: data.text });
-  //   }
-  // };
-
-
   const runAgent = async () => {
     setLoading(true);
 
-    const resume = await getData('resume')
+    // const resume = await getData('resume')
 
     try {
-      if (!resume) {
-        const response = await kickOff();
-        alert('Please upload a PDF first.');
-      }
+      const response = await kickOff();
+      // if (!resume) {
+      //   const response = await kickOff();
+      //   alert('Please upload a PDF first.');
+      // }
+      fetchJobs();
     } catch (error) {
       console.error('Error running agent:', error);
       alert('Failed to run agent');
@@ -44,19 +35,10 @@ const KickOff: React.FC = () => {
   };
 
   return (
-    <section className="wrap-row">
-
-      <div className="ml-4">
-        <input
-          type="file"
-          accept="application/pdf"
-          // onChange={handleFileChange}
-          className="block"
-        />
-      </div>
+    <section>
       <button
         onClick={runAgent}
-        className="bg-blue-500 text-white font-bold py-2 px-4 rounded-xl border"
+        className="bg-blue-500 text-white font-bold py-2 px-4 text-nowrap rounded-xl border"
         disabled={loading}
       >
         {loading ? 'Running...' : 'Run Agent'}
