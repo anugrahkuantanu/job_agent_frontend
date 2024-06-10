@@ -20,17 +20,18 @@ const KickOff: React.FC = () => {
     // const resume = await getData('resume')
 
     try {
-      const response = await kickOff();
-      // if (!resume) {
-      //   const response = await kickOff();
-      //   alert('Please upload a PDF first.');
-      // }
-      fetchJobs();
+        const response = await kickOff();
+        // if (!resume) {
+        //   const response = await kickOff();
+        //   alert('Please upload a PDF first.');
+        // }
+        // fetchJobs();
+        // alert('Success')
     } catch (error) {
-      console.error('Error running agent:', error);
-      alert('Failed to run agent');
+        console.error('Error running agent:', error);
+        alert('Failed to run agent');
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
   };
 

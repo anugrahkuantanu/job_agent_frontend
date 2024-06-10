@@ -29,6 +29,7 @@
     "react-hook-form": "^7.48.2",
     "react-icons": "^4.11.0",
     "react-monaco-editor": "^0.55.0",
+    "react-quill": "^2.0.0",
     "supabase": "^1.136.3",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",

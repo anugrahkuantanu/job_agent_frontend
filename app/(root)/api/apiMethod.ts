@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { getCurrentUser } from '@/lib/actions/index';
-import exp from 'constants';
 
 const API_BASE_URL = 'http://localhost:8000';
 
@@ -92,3 +91,20 @@ export async function kickOff() {
   
   return response.data
 }
+
+export async function CreateMotletter(data:any) {
+    const { token } = await getCurrentUser();
+
+    if(!token){
+        throw new Error('User not authenticated')
+    }
+
+    const response = await axios.post('http://localhost:8000/agent/createletter', data,{
+        headers:{
+        Authorization: `Bearer ${token}`,
+        }
+    });
+  
+  return response.data
+}
+
